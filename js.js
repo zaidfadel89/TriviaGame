@@ -28,7 +28,7 @@ $(document).ready(function() {
   var correctCount = 1;
   var wrongCount = 0;
   var unanswerCount = 0;
-  var timer = 20;
+  var timer = 25;
   var intervalId;
   var userGuess = '';
   var running = false;
@@ -39,12 +39,12 @@ $(document).ready(function() {
   //maybe an extra step you dont need
   var holder = [];
   $('#submit').hide();
-
   $('#reset').hide();
   // now we start game to start the game
   $('#start').on('click', function() {
     $('#start').hide();
     $('#submit').show();
+
     $('#correctCount').show;
 
     $(document).on('click', '#submit', function() {
@@ -54,8 +54,12 @@ $(document).ready(function() {
       console.log('userSelection' + userSelection);
       // console.log(pick);
       if (userSelection == pick.answer) {
-        alert('correct');
-        alert('you have ' + correctCount + ' Correct answer ');
+        // alert('correct');
+        if (correct) {
+          $('#correct').append('correct');
+          $(correct).empty();
+        }
+        $('#correct').append(' you have ' + correctCount + ' Correct answer ');
         correctCount++;
 
         index++;
@@ -85,16 +89,23 @@ $(document).ready(function() {
 
   // time countdown
   function decrement() {
-    $('#timeleft').html('Time remaining ' + timer);
+    $('#timeleft').html('Time remaining to end the game' + timer);
     timer--;
+
     if (timer === 0) {
+      alert('Game Over');
       correctCount++;
 
       clearInterval(intervalId);
       wrongCount++;
       stop('');
-      $('#answerblock').html(
-        '<p>Time is up! The correct answer is: ' + pick.choice[1] + '</p>'
+
+      // $('#answerblock').html(
+      //   '<p>Time is up! The correct answer is: ' + pick.choice[1] + '</p>'
+      // );
+
+      alert(
+        `you have ${correctCount} correct answers and you have ${wrongCount} wrong answers`
       );
     }
   }
@@ -108,7 +119,7 @@ $(document).ready(function() {
 
     var newQuestion = $('<form>');
 
-    $('#answerblock').append(newQuestion);
+    $('#answerblock').html(newQuestion);
 
     $('#questionblock').html('<h2>' + pick.question + '</h2>');
     for (var i = 0; i < pick.choice.length; i++) {
@@ -125,5 +136,15 @@ $(document).ready(function() {
     }
 
     $('#answerblock').append(newQuestion);
+  }
+  function reset() {
+    $('#reset').on('click', function() {
+      // reset all variables and counts
+      correctCount = 0;
+      wrongCount = 0;
+      score = 0;
+      timer = 25;
+      i = 0;
+    });
   }
 });

@@ -25,23 +25,25 @@
     ></script>
     <title>trivia-game</title>
   </head>
-  <body>
+  <body style="background-color:rgb(137, 208, 211)">
     <div class="container">
       <header></header>
-      <center><h1 style="background-color: aqua">Trivia Game</h1></center>
+      <center><h1 style=" text-shadow: 2px 2px 5px red;box-shadow: 10px 10px 5px grey;">Trivia Game</h1></center>
     </div>
     <!-- refrence from https://github.com/LindsFisch/TriviaGame/blob/master -->
 
     <div class="wrapper">
-      <div style=" color: cornsilk;margin-right: 40%;margin-left: 40%;background-color: rgb(46, 37, 179)" id="timeleft"></div>
-      <div style="background-color: rgb(129, 245, 20)" id="questionblock"></div>
-      <div style="color: darkgreen" id="answerblock"></div>
-      <center><button id="start" style="background-color: rgb(25, 233, 95)">Start Game</button><br /></center>
-    </center> <button style="color: crimson" id="submit">Submit</button><br />  </center>
+      <div style=" text-shadow: 2px 2px red" id="timeleft"></div>
+      <div  id="questionblock"></div>
+      <div style="color: rgb(0, 85, 100)" id="answerblock"></div>
+      <center><button id="start" style="text-shadow: 2px 2px rgb(12, 226, 102)">Start Game</button><br /></center>
+    </center> <button style="color: rgb(23, 20, 220)" id="submit">Submit</button><br />  </center>
   </center> <div id="correctCount"></div>  </center>
 </center>  <div id="timers"></div>  </center>
 </center>  <button id="reset">Play Again?</button>  </center>
     </div>
+<div id="correct"></div><br>
+<div id="wrongCount"></div>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
