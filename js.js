@@ -66,9 +66,13 @@ $(document).ready(function() {
         displayQuestion();
         console.log('correct: ' + correctCount);
       } else {
+        $('#wrongCount').empty();
+
         wrongCount++;
-        alert('Incorrect');
-        alert('you have ' + wrongCount + ' uncorrect answer ');
+        // alert('Incorrect');
+        $('#wrongCount').append(
+          'you have ' + wrongCount + ' uncorrect answer '
+        );
         index++;
         displayQuestion();
       }
