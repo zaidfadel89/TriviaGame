@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <!--  no copy paste refrence https://github.com/accimeesterlin/trivia-game/blob/master/index.html same IDs and CLasses -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <title>trivia-game</title>
+    <title>Trivia Game</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/Users/Jaymar/SMU_HW/week5/TriviaGame/assets/css/style.css"> -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <link rel="icon" type="image/gif" href="./assets/images/IMG_3456.jpg"/>
+
+    <!-- Custom styles for this template -->
+<!--    <link href="jumbotron-narrow.css" rel="stylesheet">-->
+
   </head>
-  <body style="background-color:rgb(137, 208, 211)">
+
+  <body style="box-shadow: 10px 10px 5px rgb(10, 14, 226);background-color: rgb(175, 240, 252);width: 80%;margin-left: 100px;">
+  
+  
+   
     <div class="container">
-      <header></header>
-      <center><h1 style=" text-shadow: 2px 2px 5px red;box-shadow: 10px 10px 5px grey;">Trivia Game</h1></center>
-    </div>
-    <!-- refrence from https://github.com/LindsFisch/TriviaGame/blob/master -->
+      <div class="header text-center clearfix">
+        <h1 class="text-muted"
+         style="text-shadow: 2px 2px red;
+      }">Trivia game</h1>
+      </div>
+     
+        <div class="container">
+        <div id="game">
+          <p id="remaining-time" class="lead" style=" text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;">Time is: <span id="timer"></span></p>
+          <p id="question" style="  text-shadow: 0 0 3px #FF0000;" class="lead"></p>
+        </div>
+        <div id="results">
+        </div>
+      </div>
 
-    <div class="wrapper">
-      <div style=" text-shadow: 2px 2px red" id="timeleft"></div>
-      <div  id="questionblock"></div>
-      <div style="color: rgb(0, 85, 100)" id="answerblock"></div>
-      <center><button id="start" style="text-shadow: 2px 2px rgb(12, 226, 102)">Start Game</button><br /></center>
-    </center> <button style="color: rgb(23, 20, 220)" id="submit">Submit</button><br />  </center>
-  </center> <div id="correctCount"></div>  </center>
-</center>  <div id="timers"></div>  </center>
-</center>  <button id="reset">Play Again?</button>  </center>
-    </div>
-<div id="correct"></div><br>
-<div id="wrongCount"></div>
+      <div class="row">
+        <div id="choices" class="text-center">
+          <button id="start" class="" style=" color: white;
+          text-shadow: 2px 2px 4px #000000;">Start Game</button>
+          <div style="color: #FF0000;" id="options">
+            
+          </div>
+          
+        </div>
+      </div>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-    <!-- 1- make start Button -->
-    <script src="js.js"></script>
+     <!-- /container -->
+
+    <!-- jQuery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- TRIVIA APP JS -->
+    <script src="js.js"></script>  
+
+
   </body>
 </html>

@@ -1,154 +1,192 @@
-// hi i deside not to get anything from google or youtube
 $(document).ready(function() {
-  var options = [
-    {
-      question:
-        'Pupusas, handmade thick stuffed corn tortillas, are a traditional dish from what country?',
-      choice: ['Ethiopia', 'El Salvadore', 'Peru', 'Guatamala'],
-      answer: 'El Salvadore',
-      photo: 'assets/images/pupusas.jpg',
-      name: 'q01'
-    },
-    {
-      question: 'Kopi luwak is a very expensive type of what?',
-      choice: ['Spice', 'Caviar', 'Coffee', 'Rice variety'],
-      answer: 'Coffee',
-      photo: 'assets/images/coffee.gif',
-      name: 'q02'
-    },
-    {
-      question:
-        'What popular soda beverage was originally developed as a mixer for whiskey?',
-      choice: ['Mountain Dew', 'Sprite', '7-UP', 'Coke'],
-      answer: 'Mountain Dew',
-      photo: 'assets/images/mtdew.gif',
-      name: 'q03'
-    }
-  ];
-  var correctCount = 1;
-  var wrongCount = 0;
-  var unanswerCount = 0;
-  var timer = 25;
-  var intervalId;
-  var userGuess = '';
-  var running = false;
-  var qCount = options.length;
-  var pick;
-  var index = 0;
-  var newArray = [];
-  //maybe an extra step you dont need
-  var holder = [];
-  $('#submit').hide();
-  $('#reset').hide();
-  // now we start game to start the game
-  $('#start').on('click', function() {
-    $('#start').hide();
-    $('#submit').show();
-
-    $('#correctCount').show;
-
-    $(document).on('click', '#submit', function() {
-      // alert($(`input[name=${pick.name}]:checked`).val());
-      $('#timers').text(runTimer);
-      var userSelection = $(`input[name=${pick.name}]:checked`).val();
-      console.log('userSelection' + userSelection);
-      // console.log(pick);
-      if (userSelection == pick.answer) {
-        // alert('correct');
-        if (correct) {
-          $('#correct').append('correct');
-          $(correct).empty();
-        }
-        $('#correct').append(' you have ' + correctCount + ' Correct answer ');
-        correctCount++;
-
-        index++;
-        displayQuestion();
-        console.log('correct: ' + correctCount);
-      } else {
-        $('#wrongCount').empty();
-
-        wrongCount++;
-        // alert('Incorrect');
-        $('#wrongCount').append(
-          'you have ' + wrongCount + ' uncorrect answer '
-        );
-        index++;
-        displayQuestion();
-      }
-    });
-    runTimer();
-    for (var i = 0; i < options.length; i++) {}
-    displayQuestion();
-  });
-
-  // timer start
-  function runTimer() {
-    if (!running) {
-      clearInterval(intervalId);
-      intervalId = setInterval(decrement, 1000);
-      running = true;
-    }
-  }
-
-  // time countdown
-  function decrement() {
-    $('#timeleft').html('Time remaining to end the game' + timer);
-    timer--;
-
-    if (timer === 0) {
-      alert('Game Over');
-      correctCount++;
-
-      clearInterval(intervalId);
-      wrongCount++;
-      stop('');
-
-      // $('#answerblock').html(
-      //   '<p>Time is up! The correct answer is: ' + pick.choice[1] + '</p>'
-      // );
-
-      alert(
-        `you have ${correctCount} correct answers and you have ${wrongCount} wrong answers`
-      );
-    }
-  }
-  //randomly pick question in array
-  function displayQuestion() {
-    //generate random index in array
-    index = Math.floor(Math.random() * options.length);
-    pick = options[index];
-    // pick = options[0];
-    console.log(pick);
-
-    var newQuestion = $('<form>');
-
-    $('#answerblock').html(newQuestion);
-
-    $('#questionblock').html('<h2>' + pick.question + '</h2>');
-    for (var i = 0; i < pick.choice.length; i++) {
-      userGuess = $('<div>');
-      newQuestion.append(
-        `<input type="radio" name="${pick.name}" value="${pick.choice[i]}">${pick.choice[i]}`
-      );
-
-      // userChoice.addClass('answerchoice');
-      // userChoice.html(pick.choice[i]);
-      //assign array position to it so can check answer
-      // userChoice.attr('data-guessvalue', pick.choice[i]);
-      // $(newQuestion).append(userChoice);
-    }
-
-    $('#answerblock').append(newQuestion);
-  }
-  function reset() {
-    $('#reset').on('click', function() {
-      // reset all variables and counts
-      correctCount = 0;
-      wrongCount = 0;
-      score = 0;
-      timer = 25;
-      i = 0;
-    });
-  }
+  // event listeners
+  $('#remaining-time').hide();
+  $('#start').on('click', trivia.startGame);
+  $(document).on('click', '.option', trivia.guessChecker);
 });
+
+var trivia = {
+  // trivia properties
+  correct: 0,
+  incorrect: 0,
+  unanswered: 0,
+  currentSet: 0,
+  timer: 20,
+  timerOn: false,
+  timerId: '',
+  // questions options and answers data
+  questions: {
+    q1: 'Who is actually a chef?',
+    q2: 'What does Joey love to eat?',
+    q3: 'How many times has Ross been divorced?',
+    q4: 'How many types of towels does Monica have?',
+    q5: "Who stole Monica's thunder after she got engaged?",
+    q6: 'Who hates Thanksgiving?',
+    q7: "Who thinks they're always the last to find out everything?"
+  },
+  options: {
+    q1: ['Monica', 'Chandler', 'Rachel', 'Ross'],
+    q2: ['Fish', 'Apples', 'Oranges', 'Sandwhiches'],
+    q3: ['5', '2', '1', '3'],
+    q4: ['3', '8', '11', '6'],
+    q5: ['Rachel', 'Phoebe', 'Emily', 'Carol'],
+    q6: ['Joey', 'Chandler', 'Rachel', 'Ross'],
+    q7: ['Ross', 'Phoebe', 'Monica', 'Chandler']
+  },
+  answers: {
+    q1: 'Monica',
+    q2: 'Sandwhiches',
+    q3: '3',
+    q4: '11',
+    q5: 'Rachel',
+    q6: 'Chandler',
+    q7: 'Phoebe'
+  },
+  // trivia methods
+  // method to initialize game
+  startGame: function() {
+    // restarting game results
+    trivia.currentSet = 0;
+    trivia.correct = 0;
+    trivia.incorrect = 0;
+    trivia.unanswered = 0;
+    clearInterval(trivia.timerId);
+
+    // show game section
+    $('#game').show();
+
+    //  empty last results
+    $('#results').html('');
+
+    // show timer
+    $('#timer').text(trivia.timer);
+
+    // remove start button
+    $('#start').hide();
+
+    $('#remaining-time').show();
+
+    // ask first question
+    trivia.nextQuestion();
+  },
+  // method to loop through and display questions and options
+  nextQuestion: function() {
+    // set timer to 20 seconds each question
+    trivia.timer = 15;
+    $('#timer').removeClass('last-seconds');
+    $('#timer').text(trivia.timer);
+
+    // to prevent timer speed up
+    if (!trivia.timerOn) {
+      trivia.timerId = setInterval(trivia.timerRunning, 1000);
+    }
+
+    // gets all the questions then indexes the current questions
+    var questionContent = Object.values(trivia.questions)[trivia.currentSet];
+    $('#question').text(questionContent);
+
+    // an array of all the user options for the current question
+    var questionOptions = Object.values(trivia.options)[trivia.currentSet];
+
+    // creates all the trivia guess options in the html
+    $.each(questionOptions, function(index, key) {
+      $('#options').append($('<button class="option">' + key + '</button>'));
+    });
+  },
+  // method to decrement counter and count unanswered if timer runs out
+  timerRunning: function() {
+    // if timer still has time left and there are still questions left to ask
+    if (
+      trivia.timer > -1 &&
+      trivia.currentSet < Object.keys(trivia.questions).length
+    ) {
+      $('#timer').text(trivia.timer);
+      trivia.timer--;
+      if (trivia.timer === 4) {
+        $('#timer').addClass('last-seconds');
+      }
+    }
+    // the time has run out and increment unanswered, run result
+    else if (trivia.timer === -1) {
+      trivia.unanswered++;
+      trivia.result = false;
+      clearInterval(trivia.timerId);
+      resultId = setTimeout(trivia.guessResult, 2000);
+      $('#results').html(
+        '<h3>Out of time! The answer is ' +
+          Object.values(trivia.answers)[trivia.currentSet] +
+          '</h3>'
+      );
+    }
+    // if all the questions have been shown end the game, show results
+    else if (trivia.currentSet === Object.keys(trivia.questions).length) {
+      // adds results of game (correct, incorrect, unanswered) to the page
+      $('#results').html(
+        '<h3>Thank you for playing!</h3>' +
+          '<p>Correct: ' +
+          trivia.correct +
+          '</p>' +
+          '<p>Incorrect: ' +
+          trivia.incorrect +
+          '</p>' +
+          '<p>Unaswered: ' +
+          trivia.unanswered +
+          '</p>' +
+          '<p>Please play again!</p>'
+      );
+
+      // hide game sction
+      $('#game').hide();
+
+      // show start button to begin a new game
+      $('#start').show();
+    }
+  },
+  // method to evaluate the option clicked
+  guessChecker: function() {
+    // timer ID for gameResult setTimeout
+    var resultId;
+
+    // the answer to the current question being asked
+    var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
+
+    // if the text of the option picked matches the answer of the current question, increment correct
+    if ($(this).text() === currentAnswer) {
+      // turn button green for correct
+      $(this)
+        .addClass('btn-success')
+        .removeClass('btn-info');
+
+      trivia.correct++;
+      clearInterval(trivia.timerId);
+      resultId = setTimeout(trivia.guessResult, 2000);
+      $('#results').html('<h3>Correct</h3>');
+    }
+    // else the user picked the wrong option, increment incorrect
+    else {
+      // turn button clicked red for incorrect
+      $(this)
+        .addClass('btn-danger')
+        .removeClass('btn-info');
+
+      trivia.incorrect++;
+      clearInterval(trivia.timerId);
+      resultId = setTimeout(trivia.guessResult, 3000);
+      $('#results').html(
+        '<h3>incorrect the rigtht answer is ' + currentAnswer + '</h3>'
+      );
+    }
+  },
+  // method to remove previous question results and options
+  guessResult: function() {
+    // increment to next question set
+    trivia.currentSet++;
+
+    // remove the options and results
+    $('.option').remove();
+    $('#results h3').remove();
+
+    // begin next question
+    trivia.nextQuestion();
+  }
+};
